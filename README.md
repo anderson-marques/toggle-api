@@ -16,14 +16,14 @@ A Toggle object consists of:
 
 ## Testing the application
 
-Always that a new dependency or source file change is required to rebuild the test image:
+Whenever a new dependency or file is changed, it is necessary to rebuild the test image:
 
 ```bash
 docker-compose build test
 ```
 
-The test image caches all the dependencies. It allow to run the build command
-before every test without any overhead or additional network usage.
+The test image caches all the dependencies. It allows running the build command
+before the tests without any overhead or additional network usage.
 
 ```bash
 docker-compose build test && docker-compose run test
@@ -55,7 +55,7 @@ app_1   | INFO: MainVerticle started
 
 ## Environment Variables
 
-The environment variables have default values to facilitate running local. The environment
+The environment variables have default values to facilitate running locally. The environment
 values used to run on Docker are defined in `docker-compose.yml`.
 
 Those are the environment variables used by this service that can be set in production:
@@ -77,9 +77,9 @@ Default: `WzqRd46wpCjJFGuunuGGfxqveo6zCCR1fw8MczQv`.
 
 ## API Endpoints
 
-The `token`, `ping`, and `toggle-values` endpoints do not require authenticated user to work.
+The `token`, `ping`, and `toggle-values` endpoints do not require authenticated user.
 
-The endpoints `toggles` and `toggles` requires a authenticated user with `admin` role.
+The endpoints `toggles` and `toggles` require a user with `admin` role.
 
 Before using the authenticated endpoints, the user must authenticate issuing a OAuth 2 access token. 
 
