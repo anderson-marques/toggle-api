@@ -79,7 +79,7 @@ Default: `WzqRd46wpCjJFGuunuGGfxqveo6zCCR1fw8MczQv`.
 
 The `token`, `ping`, and `toggle-values` endpoints do not require authenticated user.
 
-The endpoints `toggles` and `toggles` require a user with `admin` role.
+The endpoints `toggle` and `toggles` require a user with `admin` role.
 
 Before using the authenticated endpoints, the user must authenticate issuing a OAuth 2 access token. 
 
