@@ -1,0 +1,10 @@
+FROM maven:3.6.0-jdk-8-alpine AS DownloadDependencies
+LABEL author="Anderson Marques"
+WORKDIR /app
+COPY pom.xml .
+RUN [ "mvn", "verify", "clean", "dependency:resolve" ]
+
+FROM DownloadDependencies AS TestAndBuild
+WORKDIR /app
+COPY src src
+RUN [ "mvn", "clean", "compile", "test", "dependency:resolve"]

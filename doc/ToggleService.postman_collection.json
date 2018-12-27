@@ -1,0 +1,250 @@
+{
+  "info": {
+    "_postman_id": "2ce7fe79-313d-4a25-bfa2-3698e1c37812",
+    "name": "ToggleService",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "_postman_id": "c75af6a9-d49b-42d5-b9f0-dc219d4783cb",
+      "name": "Create new Toggle",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"isToggleBlue\",\n\t\"defaultValue\" : true,\n\t\"audience\" : [\n\t\t\"service-a\", \"service-b\"\n\t],\n\t\"blacklist\":[],\n\t\"overriddenValues\" : [\n\t\t{ \"identifier\" : \"service-a\", \"version\": 1, \"overriddenValue\": false }\n\t]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/toggles/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "toggles",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "667c5005-8c87-4a1b-b0cc-f82b999c9ad4",
+      "name": "Issue Access Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "c7a4fc3b-1a3e-43f3-bd4d-d49c860a084a",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "",
+              "let jsonBody = JSON.parse(responseBody);",
+              "pm.environment.set(\"access_token\", jsonBody.access_token);",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "sessionValue": "admin",
+              "type": "text"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "sessionValue": "123456",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "123456",
+              "sessionValue": "abdc",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/tokens",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "tokens"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "f57f9710-759e-4c46-8339-84759583d9e8",
+      "name": "List all toggles",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"isToggleBlue\",\n\t\"defaultValue\" : true,\n\t\"audience\" : [\n\t\t\"service-a\", \"service-b\"\n\t],\n\t\"blacklist\":[],\n\t\"overriddenValues\" : [\n\t\t{ \"identifier\" : \"service-a\", \"version\": 1, \"overriddenValue\": false }\n\t]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/toggles/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "toggles",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "97f36a0a-0e38-42f9-8b95-b7def6eba910",
+      "name": "Update Toggle",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"isToggleBlue\",\n\t\"defaultValue\" : true,\n\t\"audience\" : [\n\t\t\"service-a\", \"service-b\"\n\t],\n\t\"blacklist\":[],\n\t\"overriddenValues\" : [\n\t\t{ \"identifier\" : \"service-a\", \"version\": 1, \"overriddenValue\": false }\n\t]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/toggles/toggleName",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "toggles",
+            "toggleName"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "a05a1267-fb97-4e2d-8c8e-ab1ea0841c9f",
+      "name": "Get Toggle",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"isToggleBlue\",\n\t\"defaultValue\" : true,\n\t\"audience\" : [\n\t\t\"service-a\", \"service-b\"\n\t],\n\t\"blacklist\":[],\n\t\"overriddenValues\" : [\n\t\t{ \"identifier\" : \"service-a\", \"version\": 1, \"overriddenValue\": false }\n\t]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/toggles/isButtonRed",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "toggles",
+            "isButtonRed"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "43b247f5-0223-4764-b3f7-67babac8381c",
+      "name": "Get Toggle Values",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"isToggleBlue\",\n\t\"defaultValue\" : true,\n\t\"audience\" : [\n\t\t\"service-a\", \"service-b\"\n\t],\n\t\"blacklist\":[],\n\t\"overriddenValues\" : [\n\t\t{ \"identifier\" : \"service-a\", \"version\": 1, \"overriddenValue\": false }\n\t]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/services/serviceA/versions/1/toggle-values",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "services",
+            "serviceA",
+            "versions",
+            "1",
+            "toggle-values"
+          ]
+        },
+        "description": "Get the toggle values set for a service / version."
+      },
+      "response": []
+    }
+  ]
+}

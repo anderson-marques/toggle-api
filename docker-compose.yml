@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:3.1
+    networks:
+      - localnet
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db:/data/db
+
+  rabbit:
+    image: rabbitmq:3.7.8
+    networks:
+      localnet:
+    ports:
+      - 5672:5672
+    volumes:
+      # Configuration to enable guest user access from other machines besides localhost
+      - ./conf/rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.conf
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile-test
+    command: "mvn test"
+
+  app:
+    build: .
+    environment:
+      - MONGO_HOST=mongo
+      - RABBITMQ_HOST=rabbit
+    ports:
+      - 8080:8080
+    networks:
+      localnet:
+    depends_on:
+      - rabbit
+      - mongo
+networks:
+  localnet:

@@ -1,0 +1,189 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Toggle Service API
+  description: API to manage and query toggle values.
+
+securityDefinitions:
+  password:
+    type: oauth2
+    tokenUrl: http://localhost:8080/oauth/token
+    flow: password
+    scopes:
+      global: allows get and modifying toggles\
+
+paths:
+  /toggles:
+    get:
+      summary: List Toggles
+      description: List all Toggles.
+      security:
+       - password:
+         - global
+      responses:
+        200:
+          description: OK
+        401:
+          description: Not Authorized
+    post:
+      summary: Creates Toggle
+      description: Create a new Toggle
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Toggle'
+      security:
+       - password:
+         - global
+      responses:
+        201:
+          description: Created
+        401:
+          description: Not Authorized
+        409:
+          description: Conflict
+
+  /toggles/{name}:
+    put:
+      summary: Updates Toggle
+      description: Updates a Toggle
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: Toggle name
+          required: true
+          type: string
+      security:
+       - password:
+         - global
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad Request
+        401:
+          description: Not Authorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    get:
+      summary: Gets a Toggle
+      description: Get a toggle by its name
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: Toggle name
+          required: true
+          type: string
+      security:
+       - password:
+         - global
+      responses:
+        200:
+          description: Ok
+        401:
+          description: Not Authorized
+        404:
+          description: Not Found
+
+  /services/{identifier}/versions/version/toggle-values:
+    get:
+      summary: List Toggle Values
+      description: List the Toggle Values for a specific Service (Toggle User)
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: identifier
+          in: path
+          description: Service identifier
+          required: true
+          type: string
+        - name: version
+          in: path
+          description: Service version
+          required: true
+          type: integer
+      security: [ ]
+      responses:
+        200:
+          description: Ok
+
+  /ping:
+    get:
+      summary: Server heartbeat operation
+      description: This operation shows how to override the global security defined above, as we want to open it up for all users.
+      security: [ ]
+      responses:
+        200:
+          description: OK
+
+definitions:
+  ToggleUser:
+    title: ToggleUser
+    description: A Service that uses a toggle to control its behavior
+    type: object
+    properties:
+      identifier:
+        type: string
+      version:
+        type: integer
+      overriddenValue:
+        type: boolean
+
+  Toggle:
+    title: Toggle
+    description: A Toggle that holds a boolean value about a featur
+    type: object
+    properties:
+      name:
+        type: string
+      defaultValue:
+        type: boolean
+      audience:
+        type: array
+        items:
+          type: string
+      blacklist:
+        type: array
+        items:
+          type: string
+      overriddenValues:
+        type: array
+        items:
+          $ref: '#/definitions/ToggleUser'
+      status:
+        type: string
+        description: Order Status
+        enum:
+          - placed
+          - approved
+          - delivered
+      complete:
+        type: boolean
+        default: false
+    xml:
+      name: Order
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /anderson-carvalho/TogglesAPI/1.0.0
+schemes:
+ - https
